@@ -1,0 +1,90 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', sans-serif;
+}
+.frameWrapper {
+  display: flex;
+  width: 100%;
+  overflow: hidden;
+  align-items: center;
+  justify-content: center;
+}
+iframe {
+  width: 411px;
+  height: 731px;
+  pointer-events: none;
+  display: inline-block;
+  position: relative;
+  left: -20px;
+  top: -20px;
+}
+#content {
+  background-color: #fff;
+  position: absolute;
+  top: 200px;
+  min-height: calc(100vh - 200px);
+  left: 0;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  font-size: 25px;
+  font-family: 'Roboto', sans-serif;
+}
+.question {
+  width: 500px;
+  font-size: 16px;
+  font-weight: 600;
+}
+ul {
+  width: 500px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+.answer {
+  width: 500px;
+  font-size: 14px;
+  font-weight: 200;
+  margin-bottom: 5px;
+}
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+textarea {
+  width: 500px;
+  height: 100px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 40px;
+  resize: none;
+  padding: 10px;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  transition: all .2s ease-in-out;
+  outline: none;
+  font-size: 14px;
+}
+textarea:focus {
+  transform: scale(1.1)
+}
+.heading {
+  margin-bottom: 40px;
+}
+button {
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  padding: 20px;
+  font-size: 20px;
+  font-weight: 100;
+  border-radius: 3px;
+  border: 1px solid #ccc;
+  font-family: 'Roboto', sans-serif;
+  transition: all .2s ease-in-out;
+  width: 500px;
+}
+button:hover {
+  transform: scale(1.1)
+}
