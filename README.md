@@ -1,4 +1,4 @@
-# Lil' Open AI demo
+# Lil' OpenAI Experiment
 This takes test content as input and spits out a multiple choice question test.
 
 - Test content limited to about 4000 characters about
