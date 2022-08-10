@@ -9,11 +9,11 @@ This takes test content as input and spits out a multiple choice question test.
 
 ### Installation
 1. install deno: https://deno.land/manual/getting_started/installation
-1. clone this project locally
-1. on your command line, export `OPENAI_API_KEY` env variable with a valid OpenAI API Key
-1. Go into the cloned project directory then run the following command
+2. clone this project locally
+3. on your command line, export `OPENAI_API_KEY` env variable with a valid OpenAI API Key
+4. Go into the cloned project directory then run the following command
 ```
 deno task start
 ```
-1. View http://localhost:8000
-1. Find some test content within 4000 characters about
+5. View http://localhost:8000
+6. Find some test content within 4000 characters about
