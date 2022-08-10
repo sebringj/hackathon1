@@ -8,9 +8,9 @@ This takes test content as input and spits out a multiple choice question test.
 - Some of the manual coding can most likely be removed and be replaced with further OpenAI steps
 
 ### Installation
-1. install deno: https://deno.land/manual/getting_started/installation
-2. clone this project locally
-3. on your command line, export `OPENAI_API_KEY` env variable with a valid OpenAI API Key
+1. Install deno: https://deno.land/manual/getting_started/installation
+2. Clone this project locally
+3. On your command line, export `OPENAI_API_KEY` env variable with a valid OpenAI API Key
 4. Go into the cloned project directory then run the following command
 ```
 deno task start
