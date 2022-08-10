@@ -3,7 +3,7 @@ This takes test content as input and spits out a multiple choice question test.
 
 - Test content limited to about 4000 characters about
 - This demonstrates how to use OpenAI using a mini-pipeline approach
-- Uses 2-step approach in determine the final test output
+- Uses 2-step approach to determine the final test output
 - This can be further "trained" to optimize cost using a prompt training model
 - Some of the manual coding can most likely be removed and be replaced with further OpenAI steps
 
