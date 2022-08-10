@@ -1,7 +1,8 @@
 /** @jsx h */
 import { Fragment, h } from "preact";
 import { useState, useEffect, useCallback } from "preact/hooks";
-import { Questions } from '../routes/api/generate-test.ts';
+import { Questions, TestFormat } from '../routes/api/generate-test.ts';
+import { Answers } from '../routes/api/get-answers.ts';
 
 export default function Test() {
   useEffect(() => {
@@ -27,18 +28,64 @@ export default function Test() {
     }
     try {
       setLoading(true)
-      const resp: Questions = await fetch('./api/generate-test', {
+      const resp: TestFormat = await fetch('./api/generate-test', {
         method: 'POST',
         body: JSON.stringify({ text })
       })
-      .then(r => r.json() as Questions)
-      setTest(resp)
+      .then(r => r.json() as unknown as Test)
+      console.log(resp.text)
+      const answers: Answers = await fetch('./api/get-answers', {
+        method: 'POST',
+        body: JSON.stringify({ text: resp.text })
+      })
+      .then(r => r.json() as unknown as Answers)
+      console.log(answers)
+      answers.forEach((a, i) => {
+        resp.questions[i].answers[a.letterIndex].correct = true
+      })
+      setTest(resp.questions)
+
     } catch (err) {
       console.error(err)
     } finally {
       setLoading(false)
     }
   }, [text])
+
+  const onDownload = useCallback(() => {
+    function clean(str: string) {
+      return str.replace(/^[A-Z0-9]\./i, '').replace(/\|+/g, ' ').trim()
+    }
+    
+    function toStoryline(questions: Questions) {
+      const storyLine = []
+    
+      for (const question of questions) {
+        storyLine.push('MC')
+        storyLine.push('5')
+        storyLine.push(clean(question.text))
+        for (const answer of question.answers) {
+          if (answer.correct) {
+            storyLine.push(`*${clean(answer.text)} | Correct`)
+          } else {
+            storyLine.push(`${clean(answer.text)} | Incorrect`)
+          }
+        }
+        storyLine.push('')
+      }
+    
+      return storyLine.join('\n')
+    }
+    
+    const text = toStoryline(test)
+    const blob = new Blob([text], {type: 'text/plain'})
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = 'storyline-test.txt'
+    a.click()
+    URL.revokeObjectURL(url)
+  }, [test])
 
   return (
     <Fragment>
@@ -56,16 +103,16 @@ export default function Test() {
         </div>
         <div id="content">
           {test.length ? test.map((question, i) => (
-              <div class="question" key={`$question_${i}`}>
-                <h3>{question.text}</h3>
-                <ul>
-                  {question.answers.map((answer, j) => (
-                    <li class="answer" key={`$answer_${i}_${j}`}>
-                      {answer.text} {answer.correct ? '✅' : ''}
-                    </li>
-                  ))}
-                </ul>
-              </div>
+            <div class="question" key={`$question_${i}`}>
+              <h3>{question.text}</h3>
+              <ul>
+                {question.answers.map((answer, j) => (
+                  <li class="answer" key={`$answer_${i}_${j}`}>
+                    {answer.text} {answer.correct ? '✅' : ''}
+                  </li>
+                ))}
+              </ul>
+            </div>
           )) : (
             <form onSubmit={onSubmit}>
               <div class="heading">
@@ -75,6 +122,9 @@ export default function Test() {
               <button type="submit">Generate Test</button>
             </form>
           )}
+          {test.length ? (
+            <a href="#" class="storylineLink" onClick={onDownload}>Download Storyline Format</a>
+          ) : null}
         </div>
       </Fragment>
   );
