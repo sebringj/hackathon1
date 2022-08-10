@@ -1,7 +1,7 @@
 # Lil' OpenAI Experiment
 This takes test content as input and spits out a multiple choice question test.
 
-- Test content limited to about 4000 characters about
+- Test content limited to about 4000 characters
 - This demonstrates how to use OpenAI using a mini-pipeline approach
 - Uses 2-step approach to determine the final test output
 - This can be further "trained" to optimize cost using a prompt training model
