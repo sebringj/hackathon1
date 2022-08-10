@@ -16,4 +16,3 @@ This takes test content as input and spits out a multiple choice question test.
 deno task start
 ```
 5. View http://localhost:8000
-6. Find some test content within 4000 characters about
