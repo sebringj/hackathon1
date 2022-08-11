@@ -5,7 +5,7 @@
 import * as $0 from "./routes/api/generate-test.ts";
 import * as $1 from "./routes/api/get-answers.ts";
 import * as $2 from "./routes/index.tsx";
-import * as $$0 from "./islands/Test.tsx";
+import * as $$0 from "./islands/GenerateTest.tsx";
 
 const manifest = {
   routes: {
@@ -14,7 +14,7 @@ const manifest = {
     "./routes/index.tsx": $2,
   },
   islands: {
-    "./islands/Test.tsx": $$0,
+    "./islands/GenerateTest.tsx": $$0,
   },
   baseUrl: import.meta.url,
 };

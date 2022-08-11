@@ -1,4 +1,6 @@
-export type Answers = { questionIndex: number; letterIndex: number; }[]
+import { Handlers } from '$fresh/server.ts'
+import { Answers } from '../../types.ts'
+import openAi from '../../utils/openAi.ts'
 
 function parseAnswers(text: string) {
   const lines = text.split('\n')
@@ -19,22 +21,7 @@ export const handler: Handlers = {
   async POST(req) {
     const inputJson = await req.json()
     const aiCoersed = 'What are the correct answers for these questions?\n\n'
-    const resultJson = await fetch('https://api.openai.com/v1/completions', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${Deno.env.get('OPENAI_API_KEY')}`
-      },
-      body: JSON.stringify({
-        model: 'text-davinci-002',
-        prompt: `${aiCoersed}${inputJson.text}`,
-        temperature: 0.7,
-        max_tokens: 1547,
-        top_p: 1,
-        frequency_penalty: 0,
-        presence_penalty: 0
-      })
-    }).then(r => r.json())
+    const resultJson = await openAi.completions(`${aiCoersed}${inputJson.text}`)
     const text = resultJson.choices[0].text
     return new Response(JSON.stringify(parseAnswers(text)), {
       headers: { 'Content-Type': 'application/json' },

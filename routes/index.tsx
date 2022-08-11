@@ -1,6 +1,6 @@
 /** @jsx h */
 import { Fragment, h } from "preact";
-import Test from '../islands/Test.tsx';
+import GenerateTest from '../islands/GenerateTest.tsx';
 
 export const Head = () => (
   <head>
@@ -17,7 +17,7 @@ export default function Home() {
     <Fragment>
       <Head />
       <Fragment>
-        <Test />
+        <GenerateTest />
       </Fragment>
     </Fragment>
   );

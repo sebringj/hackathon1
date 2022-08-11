@@ -1,8 +1,6 @@
-export type Questions = { text: string; answers: { text: string; correct: boolean; }[] }[]
-export type TestFormat = {
-  questions: Questions;
-  text: string;
-}
+import { Handlers } from '$fresh/server.ts'
+import { Questions } from '../../types.ts'
+import openAi from '../../utils/openAi.ts'
 
 function parseTestResult(text: string) {
   const lines = text.split('\n')
@@ -39,22 +37,7 @@ export const handler: Handlers = {
   async POST(req) {
     const inputJson = await req.json()
     const aiCoersed = 'Generate a test from the below content with exactly 4 multiple choice questions and exactly 4 multiple choice answers:\n\n'
-    const resultJson = await fetch('https://api.openai.com/v1/completions', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${Deno.env.get('OPENAI_API_KEY')}`
-      },
-      body: JSON.stringify({
-        model: 'text-davinci-002',
-        prompt: `${aiCoersed}${inputJson.text}`,
-        temperature: 0.7,
-        max_tokens: 1547,
-        top_p: 1,
-        frequency_penalty: 0,
-        presence_penalty: 0
-      })
-    }).then(r => r.json())
+    const resultJson = await openAi.completions(`${aiCoersed}${inputJson.text}`)
     const text = resultJson.choices[0].text
     return new Response(JSON.stringify({
       text,
